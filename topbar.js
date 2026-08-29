@@ -21,7 +21,7 @@
   const css = `
 .topbar {
   position: sticky; top: 0; z-index: 40;
-  display: flex; gap: 6px;
+  display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px;
   padding: max(12px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 10px max(14px, env(safe-area-inset-left));
   /* Fully opaque so each page's body background can't bleed through
      and tint the bar a different color. Matches the dashboard's base
@@ -31,7 +31,8 @@
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
 }
 .topbar-pill {
-  flex: 1 1 0; min-width: 0;
+  flex: 0 0 auto;
+  white-space: nowrap;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 12px;
   background: rgba(255, 255, 255, 0.04);
@@ -61,6 +62,7 @@
   letter-spacing: 0.14em; text-transform: uppercase;
   color: rgba(255, 255, 255, 0.5);
   flex-shrink: 0;
+  white-space: nowrap;
 }
 .topbar-pill-count {
   margin-left: auto;
@@ -71,11 +73,12 @@
   white-space: nowrap;
 }
 .topbar-water-wrap {
-  flex: 1 1 0; min-width: 0;
+  flex: 0 0 auto;
   display: flex;
 }
 .topbar-water-pill {
-  flex: 1; min-width: 0;
+  flex: 0 0 auto;
+  white-space: nowrap;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 12px;
   background: rgba(125, 211, 252, 0.07);
