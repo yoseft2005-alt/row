@@ -22,8 +22,8 @@
   display: flex; justify-content: flex-end; align-items: center;
   gap: 8px;
   padding: max(10px, env(safe-area-inset-top)) 14px 8px;
-  background: #0a0a0b;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0B0B0C;
+  border-bottom: 1px solid rgba(212, 160, 23, 0.14);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
 }
 .topbar-water-wrap { display: flex; align-items: stretch; }
@@ -57,10 +57,10 @@
 }
 .topbar-water-minus {
   width: 44px;
-  border: 1px solid rgba(125, 211, 252, 0.16);
+  border: 1px solid rgba(212, 160, 23, 0.35);
   border-right: none;
-  background: linear-gradient(180deg, rgba(125, 211, 252, 0.28), rgba(110, 231, 183, 0.28));
-  color: #FFFFFF; font-family: inherit;
+  background: linear-gradient(180deg, #FFC107 0%, #D4A017 100%);
+  color: #1A1400; font-family: inherit;
   font-size: 20px; font-weight: 700; line-height: 1;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -70,9 +70,9 @@
 .topbar-water-minus:disabled { opacity: 0.4; cursor: not-allowed; }
 .topbar-water-add {
   width: 44px;
-  border: 1px solid rgba(125, 211, 252, 0.16);
-  background: linear-gradient(180deg, rgba(125, 211, 252, 0.28), rgba(110, 231, 183, 0.28));
-  color: #FFFFFF; font-family: inherit;
+  border: 1px solid rgba(212, 160, 23, 0.35);
+  background: linear-gradient(180deg, #FFC107 0%, #D4A017 100%);
+  color: #1A1400; font-family: inherit;
   font-size: 20px; font-weight: 700; line-height: 1;
   cursor: pointer; border-radius: 0 12px 12px 0;
   -webkit-tap-highlight-color: transparent;
@@ -81,14 +81,14 @@
 .topbar-water-add:active { transform: scale(0.94); }
 .topbar-water-add.flash,
 .topbar-water-minus.flash {
-  background: linear-gradient(180deg, rgba(125, 211, 252, 0.7), rgba(110, 231, 183, 0.7));
+  background: linear-gradient(180deg, #FFD54A 0%, #E8B41C 100%);
 }
 .bottombar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
   display: flex; justify-content: space-around; align-items: stretch;
   padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
-  background: #0a0a0b;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0B0B0C;
+  border-top: 1px solid rgba(212, 160, 23, 0.14);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
 }
 .bottombar-tab {
@@ -104,9 +104,10 @@
   filter: grayscale(100%) brightness(1.2); opacity: 0.55;
   transition: opacity 0.15s, filter 0.15s, transform 0.10s;
 }
-.bottombar-tab.active { color: #FAFAFA; }
+.bottombar-tab.active { color: #FFC107; }
 .bottombar-tab.active .bottombar-tab-icon {
-  filter: grayscale(100%) brightness(1.6); opacity: 1;
+  filter: grayscale(100%) brightness(1.3) sepia(1) saturate(5) hue-rotate(-8deg);
+  opacity: 1;
 }
 .bottombar-tab:active .bottombar-tab-icon { transform: scale(0.92); }
 body.has-bottombar {

@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#050506">
+<meta name="theme-color" content="#0B0B0C">
 <link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Life OS">
@@ -15,12 +16,18 @@
 <script src="topbar.js" defer></script>
 <style>
 :root {
+  --bg: #0B0B0C;
+  --bg-alt: #121214;
   --text-primary: #FAFAFA;
   --text-secondary: #B8B6B0;
   --text-tertiary: #76746E;
   --success: #6BE3A4;
   --warning: #F2C063;
   --danger: #FF6B6B;
+  --gold: #D4A017;
+  --gold-bright: #FFC107;
+  --gold-glow: rgba(212, 160, 23, 0.25);
+  --border-warm: #3A3022;
   --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
@@ -28,7 +35,7 @@
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0;
-  background: #050506;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
   color: var(--text-secondary);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
@@ -45,8 +52,8 @@ body::before {
   content: '';
   position: fixed; inset: 0;
   background:
-    radial-gradient(circle at 82% 14%, rgba(224, 118, 88, 0.16), transparent 45%),
-    radial-gradient(circle at 18% 90%, rgba(180, 180, 200, 0.06), transparent 50%);
+    radial-gradient(circle at 82% 14%, rgba(212, 160, 23, 0.16), transparent 45%),
+    radial-gradient(circle at 18% 90%, rgba(180, 150, 90, 0.06), transparent 50%);
   filter: blur(40px);
   pointer-events: none;
   z-index: -2;
@@ -76,7 +83,7 @@ body::after {
   font-size: 28px;
   font-weight: 700;
   letter-spacing: -0.025em;
-  background: linear-gradient(180deg, #FFFFFF 0%, #C7C4BC 120%);
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--gold) 160%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -183,9 +190,10 @@ body::after {
   margin-bottom: 22px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-warm);
   backdrop-filter: blur(24px) saturate(1.2);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45), 0 0 32px var(--gold-glow);
 }
 .day-ring {
   position: relative;
@@ -254,22 +262,23 @@ body::after {
 }
 .section-title::before {
   content: ''; width: 18px; height: 1px;
-  background: var(--text-tertiary); opacity: 0.6;
+  background: var(--gold); opacity: 0.6;
 }
 .section-title::after {
   content: ''; flex: 1; height: 1px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), transparent);
+  background: linear-gradient(90deg, rgba(212, 160, 23, 0.16), transparent);
 }
 
 .gm-card {
   position: relative;
   background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-warm);
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 14px;
   backdrop-filter: blur(24px) saturate(1.2);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45), 0 0 32px var(--gold-glow);
   transition: background 0.4s;
   overflow: hidden;
 }
@@ -556,14 +565,14 @@ body::after {
 .gm-add {
   padding: 11px 20px;
   border: 0; border-radius: 12px;
-  background: linear-gradient(180deg, #FFFFFF 0%, #E8E5DD 100%);
-  color: #0A0A0B;
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 100%);
+  color: #1A1400;
   font-family: inherit; font-size: 13px; font-weight: 700;
   cursor: pointer;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.9),
+    inset 0 1px 0 rgba(255,255,255,0.35),
     0 2px 8px rgba(0,0,0,0.35),
-    0 8px 22px rgba(0,0,0,0.25);
+    0 8px 22px var(--gold-glow);
   transition: transform 0.1s, filter 0.15s;
 }
 .gm-add:hover { filter: brightness(1.06); transform: translateY(-1px); }
@@ -571,7 +580,7 @@ body::after {
 
 .gm-polish {
   padding: 11px 18px;
-  border: 1px solid rgba(255,255,255,0.10);
+  border: 1px solid var(--border-warm);
   border-radius: 12px;
   background: rgba(255,255,255,0.04);
   color: var(--text-primary);
@@ -581,7 +590,7 @@ body::after {
 }
 .gm-polish:hover {
   background: rgba(255,255,255,0.07);
-  border-color: rgba(255,255,255,0.18);
+  border-color: var(--gold);
 }
 
 .gm-status {
@@ -596,11 +605,12 @@ body::after {
 /* ===== Component 5: Dev & AI Hub ===== */
 .hub-card {
   background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-warm);
   border-radius: 16px;
   padding: 18px;
   backdrop-filter: blur(24px) saturate(1.2);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45), 0 0 32px var(--gold-glow);
 }
 .hub-grid {
   display: grid;
@@ -613,16 +623,17 @@ body::after {
   padding: 18px 10px;
   border-radius: 14px;
   background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid var(--border-warm);
   text-decoration: none;
   color: var(--text-secondary);
-  transition: background 0.15s, border-color 0.15s, transform 0.1s, color 0.15s;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s, color 0.15s, box-shadow 0.15s;
 }
 .hub-shortcut:hover {
   background: rgba(255,255,255,0.07);
-  border-color: rgba(255,255,255,0.18);
+  border-color: var(--gold);
   color: var(--text-primary);
   transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--gold-glow);
 }
 .hub-shortcut:active { transform: translateY(0); }
 .hub-shortcut-icon { font-size: 26px; line-height: 1; }
@@ -632,7 +643,7 @@ body::after {
 .media-upload-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
 .media-upload-btn {
   padding: 10px 16px;
-  border: 1px solid rgba(255,255,255,0.10);
+  border: 1px solid var(--border-warm);
   border-radius: 10px;
   background: rgba(255,255,255,0.04);
   color: var(--text-primary);
@@ -640,7 +651,7 @@ body::after {
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
-.media-upload-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); }
+.media-upload-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--gold); }
 .media-upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .media-upload-status { font-size: 11.5px; color: var(--text-tertiary); }
 .media-grid {
@@ -660,10 +671,109 @@ body::after {
   overflow: hidden;
   transition: background 0.15s, border-color 0.15s;
 }
-.media-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16); }
+.media-item:hover { background: rgba(255,255,255,0.06); border-color: var(--gold); }
 .media-item img { width: 100%; height: 64px; object-fit: cover; border-radius: 8px; }
 .media-item-icon { font-size: 28px; }
 .media-item-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
+
+/* ===== Component 7: VisualMind ===== */
+.vm-focus-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 14px; margin-bottom: 16px;
+  border-radius: 12px;
+  background: rgba(212, 160, 23, 0.06);
+  border: 1px solid var(--border-warm);
+}
+.vm-focus-time {
+  font-family: var(--font-mono); font-size: 20px; font-weight: 700;
+  color: var(--gold-bright); font-variant-numeric: tabular-nums;
+  min-width: 60px;
+}
+.vm-focus-label { flex: 1; font-size: 11.5px; color: var(--text-tertiary); }
+.vm-focus-btn {
+  padding: 9px 16px;
+  border: 1px solid var(--border-warm); border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-primary);
+  font-family: inherit; font-size: 12.5px; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.vm-focus-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--gold); }
+.vm-focus-btn.is-active { background: var(--gold); border-color: var(--gold); color: #1A1400; }
+
+.vm-composer { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.vm-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.vm-input, .vm-textarea, .vm-select {
+  padding: 11px 14px;
+  border: 1px solid var(--border-warm);
+  border-radius: 12px;
+  background: rgba(0,0,0,0.28);
+  color: var(--text-primary);
+  font-family: inherit; font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.vm-input { width: 100%; }
+.vm-input::placeholder, .vm-textarea::placeholder { color: var(--text-tertiary); }
+.vm-input:focus, .vm-textarea:focus, .vm-select:focus { border-color: var(--gold); background: rgba(0,0,0,0.36); }
+.vm-textarea { width: 100%; resize: vertical; min-height: 64px; }
+.vm-select { flex: 0 0 auto; min-width: 150px; cursor: pointer; }
+.vm-add-btn {
+  flex: 0 0 auto;
+  padding: 11px 20px;
+  border: 0; border-radius: 12px;
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 100%);
+  color: #1A1400;
+  font-family: inherit; font-size: 13px; font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.15s;
+}
+.vm-add-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+
+.vm-list { display: flex; flex-direction: column; gap: 10px; }
+.vm-entry {
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid var(--gold);
+}
+.vm-entry-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.vm-entry-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--gold-bright);
+}
+.vm-entry-date { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-tertiary); }
+.vm-entry-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.vm-entry-body { font-size: 13px; color: var(--text-secondary); white-space: pre-wrap; line-height: 1.5; }
+.vm-entry-delete {
+  border: 0; background: transparent; color: var(--text-tertiary);
+  font-size: 16px; cursor: pointer; padding: 0 2px;
+  opacity: 0.5; transition: opacity 0.2s, color 0.2s;
+}
+.vm-entry-delete:hover { opacity: 1; color: var(--danger); }
+.vm-empty { color: var(--text-tertiary); font-size: 12.5px; text-align: center; padding: 20px 0; }
+
+/* ===== Component 8: Notes & Insights ===== */
+.notes-row { display: flex; gap: 8px; margin-bottom: 14px; }
+.notes-row .gm-input { flex: 1; min-width: 0; }
+.notes-list { display: flex; flex-direction: column; gap: 8px; }
+.notes-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.notes-item-dot { color: var(--gold); font-size: 14px; line-height: 1.4; }
+.notes-item-text { flex: 1; font-size: 13px; color: var(--text-secondary); word-break: break-word; }
+.notes-item-delete {
+  border: 0; background: transparent; color: var(--text-tertiary);
+  font-size: 15px; cursor: pointer; opacity: 0.5;
+  transition: opacity 0.2s, color 0.2s;
+}
+.notes-item-delete:hover { opacity: 1; color: var(--danger); }
 
 @media (max-width: 480px) {
   body { padding: max(20px, env(safe-area-inset-top)) 14px 50px; }
@@ -674,6 +784,8 @@ body::after {
   .hub-shortcut-icon { font-size: 22px; }
   .hub-shortcut-label { font-size: 10px; }
   .media-grid { grid-template-columns: repeat(3, 1fr); }
+  .vm-focus-row { flex-wrap: wrap; }
+  .vm-focus-label { flex-basis: 100%; order: 3; }
 }
 </style>
 </head>
@@ -777,19 +889,19 @@ body::after {
     <div class="section-title">Dev &amp; AI Hub</div>
     <div class="hub-card">
       <div class="hub-grid">
-        <a class="hub-shortcut" href="https://claude.ai/login" target="_blank" rel="noopener" aria-label="Open Claude AI">
+        <a class="hub-shortcut" href="https://claude.ai/login" target="_blank" rel="noopener noreferrer" aria-label="Open Claude AI">
           <span class="hub-shortcut-icon">✳️</span>
           <span class="hub-shortcut-label">Claude AI</span>
         </a>
-        <a class="hub-shortcut" href="https://gemini.google.com" target="_blank" rel="noopener" aria-label="Open Gemini">
+        <a class="hub-shortcut" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="Open Gemini">
           <span class="hub-shortcut-icon">✦</span>
           <span class="hub-shortcut-label">Gemini</span>
         </a>
-        <a class="hub-shortcut" href="https://vercel.com/dashboard" target="_blank" rel="noopener" aria-label="Open Vercel dashboard">
+        <a class="hub-shortcut" href="https://vercel.com/dashboard" target="_blank" rel="noopener noreferrer" aria-label="Open Vercel dashboard">
           <span class="hub-shortcut-icon">▲</span>
           <span class="hub-shortcut-label">Vercel</span>
         </a>
-        <a class="hub-shortcut" href="https://supabase.com/dashboard" target="_blank" rel="noopener" aria-label="Open Supabase dashboard">
+        <a class="hub-shortcut" href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer" aria-label="Open Supabase dashboard">
           <span class="hub-shortcut-icon">🗄️</span>
           <span class="hub-shortcut-label">Supabase</span>
         </a>
@@ -807,6 +919,48 @@ body::after {
       </div>
       <div class="media-grid" id="mediaGrid">
         <div class="media-empty" id="mediaEmpty">No files uploaded yet.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">VisualMind</div>
+    <div class="hub-card">
+      <div class="vm-focus-row">
+        <div class="vm-focus-time" id="vmFocusTime">0:00</div>
+        <div class="vm-focus-label">Focus session — <span id="vmFocusToday">0m</span> today</div>
+        <button type="button" class="vm-focus-btn" id="vmFocusBtn">Start Focus</button>
+      </div>
+
+      <div class="vm-composer">
+        <input type="text" class="vm-input" id="vmTitleInput" placeholder="Title your thought…" autocomplete="off">
+        <textarea class="vm-textarea" id="vmBodyInput" placeholder="Reflect, map a thought, capture an insight…"></textarea>
+        <div class="vm-row">
+          <select class="vm-select" id="vmTagSelect">
+            <option value="reflection">🌊 Reflection</option>
+            <option value="insight">💡 Insight</option>
+            <option value="focus">🎯 Focus</option>
+            <option value="idea">🗺️ Thought Map</option>
+          </select>
+          <button type="button" class="vm-add-btn" id="vmAddBtn">+ Save Entry</button>
+        </div>
+      </div>
+
+      <div class="vm-list" id="vmList">
+        <div class="vm-empty" id="vmEmpty">No entries yet — capture your first reflection above.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Notes &amp; Insights</div>
+    <div class="hub-card">
+      <div class="notes-row">
+        <input type="text" class="gm-input" id="notesInput" placeholder="Quick note or key learning…" autocomplete="off">
+        <button type="button" class="gm-add" id="notesAddBtn">+ Add</button>
+      </div>
+      <div class="notes-list" id="notesList">
+        <div class="vm-empty" id="notesEmpty">No notes yet.</div>
       </div>
     </div>
   </div>
@@ -1460,6 +1614,191 @@ body::after {
     window.addEventListener('focus', renderMediaGrid);
   }
 
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  // ---------- VisualMind ----------
+  // Reflections/insights/focus-tag entries + a lightweight focus-session
+  // timer. Synced cross-device via sync.js's generic app_state pipeline
+  // (see initCloudSync call below) — same mechanism as goals/health/water.
+  const VM_ENTRIES_KEY = 'visualmind:entries';
+  const VM_FOCUS_KEY   = 'visualmind:focus_log';
+  const VM_TAG_LABEL = {
+    reflection: '🌊 Reflection',
+    insight: '💡 Insight',
+    focus: '🎯 Focus',
+    idea: '🗺️ Thought Map'
+  };
+
+  function vmGetEntries() { return storeGet(VM_ENTRIES_KEY) || []; }
+  function vmSetEntries(list) { storeSet(VM_ENTRIES_KEY, list); }
+  function vmGetFocusLog() { return storeGet(VM_FOCUS_KEY) || {}; }
+  function vmSetFocusLog(log) { storeSet(VM_FOCUS_KEY, log); }
+
+  function vmFmtTimestamp(ts) {
+    const d = new Date(ts);
+    const mons = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return mons[d.getMonth()] + ' ' + d.getDate() + ', ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+  }
+
+  function vmRenderList() {
+    const vmList = document.getElementById('vmList');
+    if (!vmList) return;
+    const list = vmGetEntries();
+    if (!list.length) {
+      vmList.innerHTML = '<div class="vm-empty" id="vmEmpty">No entries yet — capture your first reflection above.</div>';
+      return;
+    }
+    vmList.innerHTML = list.slice().reverse().map((e) => (
+      '<div class="vm-entry">' +
+        '<div class="vm-entry-head">' +
+          '<span class="vm-entry-tag">' + escapeHtml(VM_TAG_LABEL[e.tag] || e.tag) + '</span>' +
+          '<span class="vm-entry-date">' + vmFmtTimestamp(e.ts) + '</span>' +
+          '<button type="button" class="vm-entry-delete" data-id="' + e.id + '" aria-label="Delete entry">×</button>' +
+        '</div>' +
+        (e.title ? '<div class="vm-entry-title">' + escapeHtml(e.title) + '</div>' : '') +
+        '<div class="vm-entry-body">' + escapeHtml(e.body) + '</div>' +
+      '</div>'
+    )).join('');
+    vmList.querySelectorAll('.vm-entry-delete').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        vmSetEntries(vmGetEntries().filter((e) => e.id !== btn.getAttribute('data-id')));
+        vmRenderList();
+      });
+    });
+  }
+
+  const vmTitleInput = document.getElementById('vmTitleInput');
+  const vmBodyInput  = document.getElementById('vmBodyInput');
+  const vmTagSelect  = document.getElementById('vmTagSelect');
+  const vmAddBtn     = document.getElementById('vmAddBtn');
+
+  if (vmAddBtn) {
+    vmAddBtn.addEventListener('click', () => {
+      const body = vmBodyInput.value.trim();
+      const title = vmTitleInput.value.trim();
+      if (!body && !title) return;
+      const entries = vmGetEntries();
+      entries.push({
+        id: 'vm' + Date.now() + '_' + Math.floor(Math.random() * 999),
+        ts: Date.now(),
+        tag: vmTagSelect.value,
+        title,
+        body
+      });
+      vmSetEntries(entries);
+      vmTitleInput.value = '';
+      vmBodyInput.value = '';
+      vmRenderList();
+    });
+  }
+
+  // ---------- VisualMind: focus session timer ----------
+  let vmFocusStartedAt = null;
+  let vmFocusInterval = null;
+  const vmFocusBtn   = document.getElementById('vmFocusBtn');
+  const vmFocusTime  = document.getElementById('vmFocusTime');
+  const vmFocusToday = document.getElementById('vmFocusToday');
+
+  function vmFmtElapsed(ms) {
+    const totalSec = Math.floor(ms / 1000);
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    return m + ':' + pad2(s);
+  }
+  function vmRenderFocusToday() {
+    if (!vmFocusToday) return;
+    const log = vmGetFocusLog();
+    const minutes = Math.round(log[dateToKey(new Date())] || 0);
+    vmFocusToday.textContent = minutes + 'm';
+  }
+  function vmTick() {
+    if (!vmFocusStartedAt) return;
+    vmFocusTime.textContent = vmFmtElapsed(Date.now() - vmFocusStartedAt);
+  }
+  function vmStopFocus() {
+    if (!vmFocusStartedAt) return;
+    const elapsedMin = (Date.now() - vmFocusStartedAt) / 60000;
+    const log = vmGetFocusLog();
+    const k = dateToKey(new Date());
+    log[k] = (log[k] || 0) + elapsedMin;
+    vmSetFocusLog(log);
+    vmFocusStartedAt = null;
+    clearInterval(vmFocusInterval);
+    vmFocusInterval = null;
+    vmFocusBtn.textContent = 'Start Focus';
+    vmFocusBtn.classList.remove('is-active');
+    vmFocusTime.textContent = '0:00';
+    vmRenderFocusToday();
+  }
+  if (vmFocusBtn) {
+    vmFocusBtn.addEventListener('click', () => {
+      if (vmFocusStartedAt) {
+        vmStopFocus();
+      } else {
+        vmFocusStartedAt = Date.now();
+        vmFocusBtn.textContent = 'Stop Focus';
+        vmFocusBtn.classList.add('is-active');
+        vmFocusInterval = setInterval(vmTick, 1000);
+        vmTick();
+      }
+    });
+  }
+
+  // ---------- Notes & Insights ----------
+  const NOTES_KEY = 'notes:list';
+  function notesGet() { return storeGet(NOTES_KEY) || []; }
+  function notesSetList(list) { storeSet(NOTES_KEY, list); }
+
+  function notesRender() {
+    const notesList = document.getElementById('notesList');
+    if (!notesList) return;
+    const list = notesGet();
+    if (!list.length) {
+      notesList.innerHTML = '<div class="vm-empty" id="notesEmpty">No notes yet.</div>';
+      return;
+    }
+    notesList.innerHTML = list.slice().reverse().map((n) => (
+      '<div class="notes-item">' +
+        '<span class="notes-item-dot">•</span>' +
+        '<span class="notes-item-text">' + escapeHtml(n.text) + '</span>' +
+        '<button type="button" class="notes-item-delete" data-id="' + n.id + '" aria-label="Delete note">×</button>' +
+      '</div>'
+    )).join('');
+    notesList.querySelectorAll('.notes-item-delete').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        notesSetList(notesGet().filter((n) => n.id !== btn.getAttribute('data-id')));
+        notesRender();
+      });
+    });
+  }
+
+  const notesInput   = document.getElementById('notesInput');
+  const notesAddBtn  = document.getElementById('notesAddBtn');
+  if (notesAddBtn) {
+    notesAddBtn.addEventListener('click', () => {
+      const text = notesInput.value.trim();
+      if (!text) return;
+      const list = notesGet();
+      list.push({ id: 'n' + Date.now() + '_' + Math.floor(Math.random() * 999), ts: Date.now(), text });
+      notesSetList(list);
+      notesInput.value = '';
+      notesRender();
+    });
+    notesInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); notesAddBtn.click(); }
+    });
+  }
+
+  vmRenderList();
+  vmRenderFocusToday();
+  notesRender();
+  window.addEventListener('visualmind-changed', () => { vmRenderList(); vmRenderFocusToday(); });
+  window.addEventListener('notes-changed', notesRender);
+
   // ---------- Boot ----------
   rollover();
   processStreak();
@@ -1485,6 +1824,20 @@ document.addEventListener('DOMContentLoaded', function () {
     onApplied: function () {
       window.dispatchEvent(new CustomEvent('goals-changed'));
       window.dispatchEvent(new Event('storage'));
+    }
+  });
+  initCloudSync({
+    appKey: 'visualmind',
+    syncedPrefixes: ['visualmind:'],
+    onApplied: function () {
+      window.dispatchEvent(new CustomEvent('visualmind-changed'));
+    }
+  });
+  initCloudSync({
+    appKey: 'notes',
+    syncedPrefixes: ['notes:'],
+    onApplied: function () {
+      window.dispatchEvent(new CustomEvent('notes-changed'));
     }
   });
 });
