@@ -1115,6 +1115,7 @@ img, video, canvas, svg { max-width: 100%; }
 .wt-photo-empty {
   grid-column: 1 / -1; text-align: center;
   padding: 50px 20px; color: var(--text-3); font-size: 13px;
+  cursor: pointer;
 }
 .wt-photo-card {
   position: relative; aspect-ratio: 3 / 4;
@@ -1371,7 +1372,7 @@ img, video, canvas, svg { max-width: 100%; }
       <input type="file" id="wtFileCamera" accept="image/*" capture="environment" style="display:none">
       <input type="file" id="wtFileLibrary" accept="image/*" style="display:none">
       <div class="wt-photo-grid" id="wtPhotoGrid">
-        <div class="wt-photo-empty">No photos yet · tap Take Photo to start</div>
+        <label class="wt-photo-empty" for="wtFileLibrary">No photos yet · tap Take Photo to start</label>
       </div>
     </div>
   </div>
@@ -3016,7 +3017,7 @@ img, video, canvas, svg { max-width: 100%; }
   function photosRender() {
     const grid = $('wtPhotoGrid');
     if (!photos.length) {
-      grid.innerHTML = '<div class="wt-photo-empty">No photos yet · tap Take Photo to start</div>';
+      grid.innerHTML = '<label class="wt-photo-empty" for="wtFileLibrary">No photos yet · tap Take Photo to start</label>';
     } else {
       grid.innerHTML = photos.map(p =>
         '<button class="wt-photo-card" data-id="' + p.id + '" type="button">' +
