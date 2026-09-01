@@ -54,6 +54,19 @@
   font-size: 13px; font-weight: 700; color: #FAFAFA;
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
+.topbar-water-minus {
+  width: 44px;
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  border-right: none;
+  background: linear-gradient(180deg, rgba(125, 211, 252, 0.28), rgba(110, 231, 183, 0.28));
+  color: #FFFFFF; font-family: inherit;
+  font-size: 20px; font-weight: 700; line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, transform 0.10s;
+}
+.topbar-water-minus:active { transform: scale(0.94); }
+.topbar-water-minus:disabled { opacity: 0.4; cursor: not-allowed; }
 .topbar-water-add {
   width: 44px;
   border: 1px solid rgba(125, 211, 252, 0.16);
@@ -65,7 +78,8 @@
   transition: background 0.15s, transform 0.10s;
 }
 .topbar-water-add:active { transform: scale(0.94); }
-.topbar-water-add.flash {
+.topbar-water-add.flash,
+.topbar-water-minus.flash {
   background: linear-gradient(180deg, rgba(125, 211, 252, 0.7), rgba(110, 231, 183, 0.7));
 }
 .topbar-finance-btn {
@@ -115,6 +129,7 @@ body.has-bottombar {
   .topbar { padding-left: 10px; padding-right: 10px; gap: 6px; }
   .topbar-water-pill { padding: 8px 11px; gap: 6px; }
   .topbar-pill-count { font-size: 12px; }
+  .topbar-water-minus { width: 40px; font-size: 18px; }
   .topbar-water-add { width: 40px; font-size: 18px; }
   .topbar-finance-btn { width: 40px; height: 38px; }
   .topbar-finance-icon { font-size: 18px; }
@@ -155,6 +170,7 @@ body.topbar-modal-open { overflow: hidden; touch-action: none; }
       <span class="topbar-pill-dot"></span>
       <span class="topbar-pill-count" id="topbarWaterCount">0/0</span>
     </a>
+    <button class="topbar-water-minus" id="topbarWaterMinus" aria-label="Remove one drink" type="button">−</button>
     <button class="topbar-water-add" id="topbarWaterAdd" aria-label="Log one drink" type="button">+</button>
   </div>
   <a href="finance.html" class="topbar-finance-btn" id="topbarFinance" aria-label="Finance">
@@ -262,6 +278,8 @@ body.topbar-modal-open { overflow: hidden; touch-action: none; }
     const countEl = document.getElementById('topbarWaterCount');
     if (countEl) countEl.textContent = w.total ? w.done + '/' + w.total : '0/0';
     setPillStatus(waterEl, classifyStatus(w.done, w.total));
+    const minusBtn = document.getElementById('topbarWaterMinus');
+    if (minusBtn) minusBtn.disabled = w.done <= 0;
   }
 
   function defaultWaterState() {
@@ -301,6 +319,19 @@ body.topbar-modal-open { overflow: hidden; touch-action: none; }
     if (btn) { btn.classList.add('flash'); setTimeout(() => btn.classList.remove('flash'), 220); }
     pushWaterMergedToSupabase(state);
   }
+  function removeWater() {
+    let state = null;
+    try { state = JSON.parse(localStorage.getItem('po_water_v1')); } catch (e) {}
+    if (!state || typeof state !== 'object') state = defaultWaterState();
+    state.logs = state.logs || {};
+    const k = calendarDateKey();
+    state.logs[k] = Math.max(0, (state.logs[k] || 0) - 1);
+    try { localStorage.setItem('po_water_v1', JSON.stringify(state)); } catch (e) {}
+    render();
+    const btn = document.getElementById('topbarWaterMinus');
+    if (btn) { btn.classList.add('flash'); setTimeout(() => btn.classList.remove('flash'), 220); }
+    pushWaterMergedToSupabase(state);
+  }
 
   function blockGesture(e) { e.preventDefault(); }
   function lockGestures() {
@@ -335,6 +366,8 @@ body.topbar-modal-open { overflow: hidden; touch-action: none; }
     injectStyleAndHTML();
     const btn = document.getElementById('topbarWaterAdd');
     if (btn) btn.addEventListener('click', (e) => { e.preventDefault(); addWater(); });
+    const minusBtn = document.getElementById('topbarWaterMinus');
+    if (minusBtn) minusBtn.addEventListener('click', (e) => { e.preventDefault(); removeWater(); });
     render();
     lockGestures();
     startModalLock();
