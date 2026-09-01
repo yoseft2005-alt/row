@@ -149,6 +149,7 @@ html, body {
 .water-num {
   font-size: 56px; font-weight: 700; letter-spacing: -0.03em;
   line-height: 1; font-variant-numeric: tabular-nums;
+  cursor: pointer;
 }
 .water-target {
   font-size: 18px; color: var(--text-3); font-weight: 500;
@@ -478,7 +479,7 @@ html, body {
   <div class="card">
     <div class="water-label" id="waterUnitLabel">BOTTLES DRANK TODAY</div>
     <div class="water-row">
-      <span class="water-num" id="waterNum">0</span>
+      <span class="water-num" id="waterNum" role="button" tabindex="0" aria-label="Edit amount drank today">0</span>
       <span class="water-target" id="waterTarget">/ 9</span>
     </div>
 
@@ -771,6 +772,9 @@ html, body {
     if (ml >= 1000) return (ml / 1000).toFixed(1) + ' L';
     return Math.round(ml) + ' ml';
   }
+  function stepAmount() {
+    return state.unit === 'ml' ? 250 : 1;
+  }
 
   // ============================================================
   // RENDER
@@ -791,7 +795,9 @@ html, body {
     $('waterUnitLabel').textContent = unitName.toUpperCase() + ' DRANK TODAY';
     $('waterNum').textContent = count;
     $('waterTarget').textContent = '/ ' + targetUnits;
-    $('waterPlusLabel').textContent = 'Drank a ' + unitLabelSingular();
+    $('waterPlusLabel').textContent = (state.unit === 'ml')
+      ? ('+' + stepAmount() + ' ml')
+      : ('Drank a ' + unitLabelSingular());
 
     // Progress bar with three zones: low (0-65%), healthy (65-100%), over (100-150%)
     const pctRaw = (count / targetUnits) * 100;
@@ -899,15 +905,29 @@ html, body {
   // EVENT WIRING
   // ============================================================
   $('waterPlusBtn').addEventListener('click', () => {
-    setTodayCount(todayCount() + 1);
+    setTodayCount(todayCount() + stepAmount());
     renderWater();
     const btn = $('waterPlusBtn');
     btn.style.transform = 'scale(0.97)';
     setTimeout(() => { btn.style.transform = ''; }, 120);
   });
   $('waterMinusBtn').addEventListener('click', () => {
-    setTodayCount(Math.max(0, todayCount() - 1));
+    setTodayCount(Math.max(0, todayCount() - stepAmount()));
     renderWater();
+  });
+
+  function editTodayCount() {
+    const current = todayCount();
+    const input = prompt('Enter exact amount drank today (' + unitLabelPlural() + '):', current);
+    if (input === null) return;
+    const n = parseFloat(input);
+    if (isNaN(n)) return;
+    setTodayCount(Math.max(0, n));
+    renderWater();
+  }
+  $('waterNum').addEventListener('click', editTodayCount);
+  $('waterNum').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); editTodayCount(); }
   });
 
   $('whyToggle').addEventListener('click', () => {
