@@ -10,6 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Life OS">
 <title>Yosef's Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js" defer></script>
 <script src="sync.js" defer></script>
 <script src="topbar.js" defer></script>
 <style>
@@ -627,6 +628,43 @@ body::after {
 .hub-shortcut-icon { font-size: 26px; line-height: 1; }
 .hub-shortcut-label { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
 
+/* ===== Component 6: Media Uploads ===== */
+.media-upload-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.media-upload-btn {
+  padding: 10px 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-primary);
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.media-upload-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); }
+.media-upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.media-upload-status { font-size: 11.5px; color: var(--text-tertiary); }
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+.media-empty { color: var(--text-tertiary); font-size: 12.5px; grid-column: 1 / -1; text-align: center; padding: 12px 0; }
+.media-item {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  text-decoration: none; color: var(--text-secondary);
+  font-size: 10.5px; text-align: center;
+  overflow: hidden;
+  transition: background 0.15s, border-color 0.15s;
+}
+.media-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16); }
+.media-item img { width: 100%; height: 64px; object-fit: cover; border-radius: 8px; }
+.media-item-icon { font-size: 28px; }
+.media-item-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
+
 @media (max-width: 480px) {
   body { padding: max(20px, env(safe-area-inset-top)) 14px 50px; }
   .gm-card { padding: 16px; }
@@ -635,6 +673,7 @@ body::after {
   .hub-shortcut { padding: 16px 8px; }
   .hub-shortcut-icon { font-size: 22px; }
   .hub-shortcut-label { font-size: 10px; }
+  .media-grid { grid-template-columns: repeat(3, 1fr); }
 }
 </style>
 </head>
@@ -754,6 +793,20 @@ body::after {
           <span class="hub-shortcut-icon">🗄️</span>
           <span class="hub-shortcut-label">Supabase</span>
         </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Media Uploads</div>
+    <div class="hub-card">
+      <div class="media-upload-row">
+        <input type="file" id="mediaFileInput" style="display:none" accept="image/*,application/pdf,.doc,.docx,.txt">
+        <button type="button" class="media-upload-btn" id="mediaUploadBtn">📎 Upload File</button>
+        <span class="media-upload-status" id="mediaUploadStatus"></span>
+      </div>
+      <div class="media-grid" id="mediaGrid">
+        <div class="media-empty" id="mediaEmpty">No files uploaded yet.</div>
       </div>
     </div>
   </div>
@@ -1357,6 +1410,55 @@ body::after {
     document.getElementById('tomorrowStatus'),
     loadTomorrow
   );
+
+  // ---------- Media Uploads (Supabase Storage, via app.js) ----------
+  const mediaFileInput    = document.getElementById('mediaFileInput');
+  const mediaUploadBtn    = document.getElementById('mediaUploadBtn');
+  const mediaUploadStatus = document.getElementById('mediaUploadStatus');
+  const mediaGrid         = document.getElementById('mediaGrid');
+
+  function isImageName(name) { return /\.(png|jpe?g|gif|webp|heic|heif)$/i.test(name); }
+
+  async function renderMediaGrid() {
+    if (!mediaGrid || !window.MediaHub) return;
+    const files = await window.MediaHub.listFiles();
+    if (!files.length) {
+      mediaGrid.innerHTML = '<div class="media-empty" id="mediaEmpty">No files uploaded yet.</div>';
+      return;
+    }
+    mediaGrid.innerHTML = files.map((f) => {
+      const thumb = (isImageName(f.name) && f.url)
+        ? '<img src="' + f.url + '" alt="">'
+        : '<span class="media-item-icon">📄</span>';
+      const label = f.name.replace(/^\d+_/, '');
+      return '<a class="media-item" href="' + (f.url || '#') + '" target="_blank" rel="noopener">' +
+        thumb + '<span class="media-item-name">' + label + '</span></a>';
+    }).join('');
+  }
+
+  if (mediaUploadBtn && mediaFileInput) {
+    mediaUploadBtn.addEventListener('click', () => mediaFileInput.click());
+    mediaFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      mediaUploadBtn.disabled = true;
+      mediaUploadStatus.textContent = 'Uploading…';
+      const result = window.MediaHub
+        ? await window.MediaHub.uploadFile(file)
+        : { ok: false, error: 'Not available.' };
+      mediaUploadBtn.disabled = false;
+      mediaFileInput.value = '';
+      mediaUploadStatus.textContent = result.ok ? 'Uploaded.' : (result.error || 'Upload failed.');
+      if (result.ok) renderMediaGrid();
+      setTimeout(() => { mediaUploadStatus.textContent = ''; }, 3000);
+    });
+    // app.js (which defines window.MediaHub) loads with `defer`, so it
+    // hasn't necessarily run yet at this point in parsing — wait for
+    // DOMContentLoaded (fires after all deferred scripts) before the
+    // first listing fetch, same pattern used by the cloud-sync init below.
+    document.addEventListener('DOMContentLoaded', renderMediaGrid, { once: true });
+    window.addEventListener('focus', renderMediaGrid);
+  }
 
   // ---------- Boot ----------
   rollover();
