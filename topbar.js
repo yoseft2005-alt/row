@@ -4,8 +4,9 @@
 //     <script src="topbar.js" defer></script>
 // It self-injects HTML + CSS, reads progress from localStorage,
 // and renders the water +1 button in the top bar plus the
-// Main/Health/Fitness bottom tabs. Skips chrome on finance.html
-// and inside iframes (so the water tracker can embed cleanly).
+// Main/Health/Fitness/Finance bottom tabs. Skips chrome on
+// finance.html and inside iframes (so the water tracker can
+// embed cleanly, and finance.html keeps its own internal nav).
 // =============================================================
 (function () {
   'use strict';
@@ -82,20 +83,6 @@
 .topbar-water-minus.flash {
   background: linear-gradient(180deg, rgba(125, 211, 252, 0.7), rgba(110, 231, 183, 0.7));
 }
-.topbar-finance-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 44px; height: 42px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 12px; text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s;
-}
-.topbar-finance-btn:hover { background: rgba(255, 255, 255, 0.08); }
-.topbar-finance-icon {
-  font-size: 20px; line-height: 1;
-  filter: grayscale(100%) brightness(1.4); opacity: 0.85;
-}
 .bottombar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
   display: flex; justify-content: space-around; align-items: stretch;
@@ -131,8 +118,6 @@ body.has-bottombar {
   .topbar-pill-count { font-size: 12px; }
   .topbar-water-minus { width: 40px; font-size: 18px; }
   .topbar-water-add { width: 40px; font-size: 18px; }
-  .topbar-finance-btn { width: 40px; height: 38px; }
-  .topbar-finance-icon { font-size: 18px; }
   .bottombar-tab-icon { font-size: 22px; }
   .bottombar-tab { font-size: 10px; }
 }
@@ -173,9 +158,6 @@ body.topbar-modal-open { overflow: hidden; touch-action: none; }
     <button class="topbar-water-minus" id="topbarWaterMinus" aria-label="Remove one drink" type="button">−</button>
     <button class="topbar-water-add" id="topbarWaterAdd" aria-label="Log one drink" type="button">+</button>
   </div>
-  <a href="finance.html" class="topbar-finance-btn" id="topbarFinance" aria-label="Finance">
-    <span class="topbar-finance-icon">📊</span>
-  </a>
 </header>`;
 
   const bottombarHtml = `
@@ -188,6 +170,9 @@ body.topbar-modal-open { overflow: hidden; touch-action: none; }
   </a>
   <a href="gym.html" class="bottombar-tab" data-page="fitness">
     <span class="bottombar-tab-icon">💪</span><span>Fitness</span>
+  </a>
+  <a href="finance.html" class="bottombar-tab" data-page="finance" aria-label="Finance">
+    <span class="bottombar-tab-icon">📊</span><span>Finance</span>
   </a>
 </nav>`;
 
