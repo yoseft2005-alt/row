@@ -592,10 +592,49 @@ body::after {
 }
 .gm-status.gm-status-error { color: var(--danger); }
 
+/* ===== Component 5: Dev & AI Hub ===== */
+.hub-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 18px;
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+}
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.hub-shortcut {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px;
+  padding: 18px 10px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: background 0.15s, border-color 0.15s, transform 0.1s, color 0.15s;
+}
+.hub-shortcut:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+.hub-shortcut:active { transform: translateY(0); }
+.hub-shortcut-icon { font-size: 26px; line-height: 1; }
+.hub-shortcut-label { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+
 @media (max-width: 480px) {
   body { padding: max(20px, env(safe-area-inset-top)) 14px 50px; }
   .gm-card { padding: 16px; }
   .gm-progress-num { font-size: 36px; }
+  .hub-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .hub-shortcut { padding: 16px 8px; }
+  .hub-shortcut-icon { font-size: 22px; }
+  .hub-shortcut-label { font-size: 10px; }
 }
 </style>
 </head>
@@ -691,6 +730,30 @@ body::after {
         <button type="button" id="tomorrowAddBtn"    class="gm-add">+ Add</button>
         <button type="button" id="tomorrowPolishBtn" class="gm-polish">✨ Polish</button>
         <div class="gm-status" id="tomorrowStatus"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Dev &amp; AI Hub</div>
+    <div class="hub-card">
+      <div class="hub-grid">
+        <a class="hub-shortcut" href="https://claude.ai/login" target="_blank" rel="noopener" aria-label="Open Claude AI">
+          <span class="hub-shortcut-icon">✳️</span>
+          <span class="hub-shortcut-label">Claude AI</span>
+        </a>
+        <a class="hub-shortcut" href="https://gemini.google.com" target="_blank" rel="noopener" aria-label="Open Gemini">
+          <span class="hub-shortcut-icon">✦</span>
+          <span class="hub-shortcut-label">Gemini</span>
+        </a>
+        <a class="hub-shortcut" href="https://vercel.com/dashboard" target="_blank" rel="noopener" aria-label="Open Vercel dashboard">
+          <span class="hub-shortcut-icon">▲</span>
+          <span class="hub-shortcut-label">Vercel</span>
+        </a>
+        <a class="hub-shortcut" href="https://supabase.com/dashboard" target="_blank" rel="noopener" aria-label="Open Supabase dashboard">
+          <span class="hub-shortcut-icon">🗄️</span>
+          <span class="hub-shortcut-label">Supabase</span>
+        </a>
       </div>
     </div>
   </div>
