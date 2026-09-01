@@ -775,6 +775,103 @@ body::after {
 }
 .notes-item-delete:hover { opacity: 1; color: var(--danger); }
 
+/* ===== Component 9: 4-Tab Navigation ===== */
+.lifeos-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.lifeos-tab {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px;
+  padding: 12px 6px;
+  border-radius: 14px;
+  border: 1px solid var(--border-warm);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-tertiary);
+  font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.lifeos-tab:hover { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+.lifeos-tab-icon { font-size: 20px; line-height: 1; filter: grayscale(100%) brightness(1.2); opacity: 0.6; }
+.lifeos-tab.active {
+  color: var(--gold-bright);
+  border-color: var(--gold);
+  background: rgba(212, 160, 23, 0.08);
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+.lifeos-tab.active .lifeos-tab-icon { filter: grayscale(100%) brightness(1.3) sepia(1) saturate(5) hue-rotate(-8deg); opacity: 1; }
+.lifeos-panel[hidden] { display: none; }
+
+/* ===== Component 10: Quick Tracking (Home) ===== */
+.quick-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.quick-track-card {
+  display: block;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-warm);
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+.quick-track-card:hover { background: rgba(255,255,255,0.07); border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 0 20px var(--gold-glow); }
+.quick-track-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.quick-track-icon { font-size: 18px; }
+.quick-track-label {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.quick-track-value {
+  font-family: var(--font-mono); font-size: 24px; font-weight: 700;
+  color: var(--text-primary); font-variant-numeric: tabular-nums;
+  margin-bottom: 4px;
+}
+.quick-track-sub { font-size: 11px; color: var(--gold-bright); font-weight: 600; }
+
+/* ===== Component 11: Finance glance (Tab 2) ===== */
+.finance-glance-card { display: flex; flex-direction: column; gap: 18px; }
+.finance-glance-row { display: flex; gap: 10px; }
+.finance-glance-stat {
+  flex: 1;
+  text-align: center;
+  padding: 14px 8px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.finance-glance-num {
+  font-family: var(--font-mono); font-size: 26px; font-weight: 700;
+  color: var(--gold-bright); font-variant-numeric: tabular-nums;
+  margin-bottom: 4px;
+}
+.finance-glance-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); }
+.finance-open-btn { display: block; text-align: center; text-decoration: none; }
+
+/* ===== Component 12: Google Calendar placeholder (Tab 3) ===== */
+.calendar-card { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.calendar-card-icon { font-size: 32px; flex-shrink: 0; }
+.calendar-card-body { flex: 1; min-width: 160px; }
+.calendar-card-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+.calendar-card-sub { font-size: 12px; color: var(--text-tertiary); }
+.calendar-connect-btn { flex-shrink: 0; }
+
+/* ===== Component 13: Media type filter (Tab 4) ===== */
+.media-filter-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.media-filter-btn {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-warm);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-tertiary);
+  font-family: inherit; font-size: 11px; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.media-filter-btn:hover { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+.media-filter-btn.active { background: var(--gold); border-color: var(--gold); color: #1A1400; }
+
 @media (max-width: 480px) {
   body { padding: max(20px, env(safe-area-inset-top)) 14px 50px; }
   .gm-card { padding: 16px; }
@@ -786,6 +883,11 @@ body::after {
   .media-grid { grid-template-columns: repeat(3, 1fr); }
   .vm-focus-row { flex-wrap: wrap; }
   .vm-focus-label { flex-basis: 100%; order: 3; }
+  .lifeos-tab { font-size: 9.5px; padding: 10px 4px; }
+  .lifeos-tab-icon { font-size: 18px; }
+  .quick-track-value { font-size: 20px; }
+  .calendar-card { flex-direction: column; align-items: flex-start; }
+  .calendar-connect-btn { width: 100%; }
 }
 </style>
 </head>
@@ -793,6 +895,23 @@ body::after {
 <div class="page">
 
   <h1 class="dash-title">Yosef's Dashboard</h1>
+
+  <nav class="lifeos-tabs" id="lifeosTabs" role="tablist" aria-label="Dashboard sections">
+    <button type="button" class="lifeos-tab active" data-tab="home" role="tab" aria-selected="true">
+      <span class="lifeos-tab-icon">🏠</span><span>Home</span>
+    </button>
+    <button type="button" class="lifeos-tab" data-tab="finance" role="tab" aria-selected="false">
+      <span class="lifeos-tab-icon">💰</span><span>Finance</span>
+    </button>
+    <button type="button" class="lifeos-tab" data-tab="mind" role="tab" aria-selected="false">
+      <span class="lifeos-tab-icon">🧠</span><span>Mind &amp; AI</span>
+    </button>
+    <button type="button" class="lifeos-tab" data-tab="pdfs" role="tab" aria-selected="false">
+      <span class="lifeos-tab-icon">📄</span><span>PDFs</span>
+    </button>
+  </nav>
+
+  <div class="lifeos-panel" id="panel-home" role="tabpanel">
 
   <div class="ticker-row">
     <div class="goal-ticker" id="goalTicker" aria-live="polite" aria-atomic="true">
@@ -886,6 +1005,55 @@ body::after {
   </div>
 
   <div class="section">
+    <div class="section-title">Quick Tracking</div>
+    <div class="quick-track-grid">
+      <a class="quick-track-card" href="health.html#water" id="quickWaterCard">
+        <div class="quick-track-head">
+          <span class="quick-track-icon">💧</span>
+          <span class="quick-track-label">Water</span>
+        </div>
+        <div class="quick-track-value" id="quickWaterValue">—/—</div>
+        <div class="quick-track-sub">Open Water Coach →</div>
+      </a>
+      <a class="quick-track-card" href="gym.html" id="quickFitnessCard">
+        <div class="quick-track-head">
+          <span class="quick-track-icon">💪</span>
+          <span class="quick-track-label">Fitness</span>
+        </div>
+        <div class="quick-track-value" id="quickFitnessValue">—</div>
+        <div class="quick-track-sub">Open Gym Coach →</div>
+      </a>
+    </div>
+  </div>
+
+  </div><!-- /panel-home -->
+
+  <div class="lifeos-panel" id="panel-finance" role="tabpanel" hidden>
+    <div class="section">
+      <div class="section-title">Finance</div>
+      <div class="hub-card finance-glance-card">
+        <div class="finance-glance-row" id="financeGlanceRow">
+          <div class="finance-glance-stat">
+            <div class="finance-glance-num" id="financeSubsCount">—</div>
+            <div class="finance-glance-label">Subscriptions</div>
+          </div>
+          <div class="finance-glance-stat">
+            <div class="finance-glance-num" id="financeWishCount">—</div>
+            <div class="finance-glance-label">Wishlist</div>
+          </div>
+          <div class="finance-glance-stat">
+            <div class="finance-glance-num" id="financeOrdersCount">—</div>
+            <div class="finance-glance-label">Incoming Orders</div>
+          </div>
+        </div>
+        <a class="gm-add finance-open-btn" href="finance.html">Open Finance →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lifeos-panel" id="panel-mind" role="tabpanel" hidden>
+
+  <div class="section">
     <div class="section-title">Dev &amp; AI Hub</div>
     <div class="hub-card">
       <div class="hub-grid">
@@ -905,20 +1073,6 @@ body::after {
           <span class="hub-shortcut-icon">🗄️</span>
           <span class="hub-shortcut-label">Supabase</span>
         </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Media Uploads</div>
-    <div class="hub-card">
-      <div class="media-upload-row">
-        <input type="file" id="mediaFileInput" style="display:none" accept="image/*,application/pdf,.doc,.docx,.txt">
-        <button type="button" class="media-upload-btn" id="mediaUploadBtn">📎 Upload File</button>
-        <span class="media-upload-status" id="mediaUploadStatus"></span>
-      </div>
-      <div class="media-grid" id="mediaGrid">
-        <div class="media-empty" id="mediaEmpty">No files uploaded yet.</div>
       </div>
     </div>
   </div>
@@ -953,6 +1107,18 @@ body::after {
   </div>
 
   <div class="section">
+    <div class="section-title">Google Calendar</div>
+    <div class="hub-card calendar-card">
+      <div class="calendar-card-icon">📅</div>
+      <div class="calendar-card-body">
+        <div class="calendar-card-title">Not connected yet</div>
+        <div class="calendar-card-sub">Connect your Google account to see today's events here.</div>
+      </div>
+      <button type="button" class="gm-polish calendar-connect-btn" id="calendarConnectBtn">Connect Google Calendar</button>
+    </div>
+  </div>
+
+  <div class="section">
     <div class="section-title">Notes &amp; Insights</div>
     <div class="hub-card">
       <div class="notes-row">
@@ -964,6 +1130,31 @@ body::after {
       </div>
     </div>
   </div>
+
+  </div><!-- /panel-mind -->
+
+  <div class="lifeos-panel" id="panel-pdfs" role="tabpanel" hidden>
+
+  <div class="section">
+    <div class="section-title">PDFs &amp; Resources</div>
+    <div class="hub-card">
+      <div class="media-upload-row">
+        <input type="file" id="mediaFileInput" style="display:none" accept="image/*,application/pdf,.doc,.docx,.txt">
+        <button type="button" class="media-upload-btn" id="mediaUploadBtn">📎 Upload File</button>
+        <span class="media-upload-status" id="mediaUploadStatus"></span>
+      </div>
+      <div class="media-filter-row" id="mediaFilterRow">
+        <button type="button" class="media-filter-btn active" data-filter="all">All</button>
+        <button type="button" class="media-filter-btn" data-filter="image">Images</button>
+        <button type="button" class="media-filter-btn" data-filter="doc">Documents</button>
+      </div>
+      <div class="media-grid" id="mediaGrid">
+        <div class="media-empty" id="mediaEmpty">No files uploaded yet.</div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /panel-pdfs -->
 
 </div>
 
@@ -1575,7 +1766,10 @@ body::after {
 
   async function renderMediaGrid() {
     if (!mediaGrid || !window.MediaHub) return;
-    const files = await window.MediaHub.listFiles();
+    let files = await window.MediaHub.listFiles();
+    const filter = window.mediaTypeFilter || 'all';
+    if (filter === 'image') files = files.filter((f) => isImageName(f.name));
+    else if (filter === 'doc') files = files.filter((f) => !isImageName(f.name));
     if (!files.length) {
       mediaGrid.innerHTML = '<div class="media-empty" id="mediaEmpty">No files uploaded yet.</div>';
       return;
@@ -1586,7 +1780,7 @@ body::after {
         : '<span class="media-item-icon">📄</span>';
       const label = f.name.replace(/^\d+_/, '');
       return '<a class="media-item" href="' + (f.url || '#') + '" target="_blank" rel="noopener">' +
-        thumb + '<span class="media-item-name">' + label + '</span></a>';
+        thumb + '<span class="media-item-name">' + escapeHtml(label) + '</span></a>';
     }).join('');
   }
 
@@ -1798,6 +1992,115 @@ body::after {
   notesRender();
   window.addEventListener('visualmind-changed', () => { vmRenderList(); vmRenderFocusToday(); });
   window.addEventListener('notes-changed', notesRender);
+
+  // ---------- 4-Tab Navigation ----------
+  const LIFEOS_TAB_KEY = 'lifeos:active_tab';
+  const lifeosTabs = document.getElementById('lifeosTabs');
+  function activateLifeosTab(name) {
+    document.querySelectorAll('.lifeos-tab').forEach((btn) => {
+      const active = btn.getAttribute('data-tab') === name;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    document.querySelectorAll('.lifeos-panel').forEach((panel) => {
+      panel.hidden = panel.id !== 'panel-' + name;
+    });
+    try { localStorage.setItem(LIFEOS_TAB_KEY, name); } catch (e) {}
+  }
+  if (lifeosTabs) {
+    lifeosTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('.lifeos-tab');
+      if (!btn) return;
+      activateLifeosTab(btn.getAttribute('data-tab'));
+    });
+    let savedTab = 'home';
+    try { savedTab = localStorage.getItem(LIFEOS_TAB_KEY) || 'home'; } catch (e) {}
+    if (document.getElementById('panel-' + savedTab)) activateLifeosTab(savedTab);
+  }
+
+  // ---------- Quick Tracking (Home) ----------
+  function getWaterQuickProgress() {
+    let state = null;
+    try { state = JSON.parse(localStorage.getItem('po_water_v1')); } catch (e) {}
+    if (!state) return { done: 0, total: 0 };
+    const done = (state.logs || {})[dateToKey(new Date())] || 0;
+    const p = state.profile || { weightKg: 75 };
+    const wKg = state.weightUnit === 'lb' ? (p.weightKg || 0) / 2.20462 : (p.weightKg || 0);
+    const base = wKg * 35;
+    const exercise = (p.activityHrsPerWeek || 0) / 7 * 500;
+    const caffeine = Math.max(0, (state.caffeineMgPerDay || 0) - 200) * 1.5;
+    const subs = (state.substances || []).reduce((s, x) => {
+      const dose = (x && x.dose != null ? x.dose : (x && x.defaultDose)) || 0;
+      return s + Math.max(0, dose * ((x && x.mlPerUnit) || 0));
+    }, 0);
+    let adjust = 0;
+    if (p.sex === 'm') adjust += 200;
+    if ((p.age || 0) >= 50) adjust += 100;
+    const totalMl = base + exercise + caffeine + subs + adjust;
+    let unitVol;
+    if (state.unit === 'glass') unitVol = state.glassMl || 250;
+    else if (state.unit === 'oz') unitVol = 30;
+    else if (state.unit === 'ml') unitVol = 1;
+    else unitVol = state.bottleMl || 500;
+    const total = Math.max(1, Math.ceil(totalMl / unitVol));
+    return { done, total };
+  }
+  function renderQuickTracking() {
+    const waterEl = document.getElementById('quickWaterValue');
+    if (waterEl) {
+      const w = getWaterQuickProgress();
+      waterEl.textContent = w.total ? (w.done + '/' + w.total) : '—/—';
+    }
+    const fitnessEl = document.getElementById('quickFitnessValue');
+    if (fitnessEl) {
+      let done = {};
+      try { done = JSON.parse(localStorage.getItem('po_coach_workout_done')) || {}; } catch (e) {}
+      fitnessEl.textContent = done[dateToKey(new Date())] ? '✓ Logged' : 'Not yet';
+    }
+  }
+
+  // ---------- Finance glance (Tab 2) ----------
+  function renderFinanceGlance() {
+    const subsEl = document.getElementById('financeSubsCount');
+    const wishEl = document.getElementById('financeWishCount');
+    const ordersEl = document.getElementById('financeOrdersCount');
+    if (!subsEl) return;
+    const subs = storeGet('subs') || [];
+    const wishlist = storeGet('wishlist') || [];
+    const orders = storeGet('incoming_orders') || [];
+    subsEl.textContent = subs.length;
+    wishEl.textContent = wishlist.length;
+    ordersEl.textContent = orders.length;
+  }
+
+  // ---------- Google Calendar placeholder (Tab 3) ----------
+  const calendarConnectBtn = document.getElementById('calendarConnectBtn');
+  if (calendarConnectBtn) {
+    calendarConnectBtn.addEventListener('click', () => {
+      calendarConnectBtn.textContent = 'Needs Google OAuth setup';
+      setTimeout(() => { calendarConnectBtn.textContent = 'Connect Google Calendar'; }, 2500);
+    });
+  }
+
+  // ---------- Media type filter (Tab 4) ----------
+  const mediaFilterRow = document.getElementById('mediaFilterRow');
+  window.mediaTypeFilter = 'all';
+  if (mediaFilterRow) {
+    mediaFilterRow.addEventListener('click', (e) => {
+      const btn = e.target.closest('.media-filter-btn');
+      if (!btn) return;
+      mediaFilterRow.querySelectorAll('.media-filter-btn').forEach((b) => b.classList.toggle('active', b === btn));
+      window.mediaTypeFilter = btn.getAttribute('data-filter');
+      if (typeof renderMediaGrid === 'function') renderMediaGrid();
+    });
+  }
+
+  renderQuickTracking();
+  renderFinanceGlance();
+  window.addEventListener('storage', renderQuickTracking);
+  window.addEventListener('storage', renderFinanceGlance);
+  window.addEventListener('focus', renderQuickTracking);
+  window.addEventListener('focus', renderFinanceGlance);
 
   // ---------- Boot ----------
   rollover();
